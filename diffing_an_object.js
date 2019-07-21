@@ -9,7 +9,24 @@ oldCommit = {
 }
 
 function diff(newCode, oldCode) {
-    return Object.entries(newCode)
+    let diff = []
+    let oldEntries = Object.entries(oldCode)
+    let newEntries = Object.entries(newCode)
+    
+    oldEntries.forEach(entry => {
+      if(!newCode.hasOwnProperty(entry[0])) {
+        entry.unshift('-')
+        diff.push(entry)
+      }  
+    })
+  
+    newEntries.forEach(entry => {
+      if(!oldCode.hasOwnProperty(entry[0])) {
+        entry.unshift('+')
+        diff.push(entry)
+      } 
+    })
+    return diff
 }
 
 console.log( diff(newCommit, oldCommit))
